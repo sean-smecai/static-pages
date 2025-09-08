@@ -15,11 +15,43 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'EAAPgQgZAa150BPZAWkxCb3Kzu3ucFfyYZApgZAXpWozpa0YaJdLjZBM7TWl5CUQ6dwXbdP9hp58AKjtFpWo7rsFZAdfAlZA7MJIAwMOiYZA0uAJxOZAhZA9KV0mruyyas8qeHZAN2diZB5NATRGZBbrSWH7NPVceaSwKuYGwTdloxZCEIXGQluj4j7JvMp2iKFxwb7hqK3NAZDZD');
+    fbq('init', '1613600436203790');
     fbq('track', 'PageView');
+    
+    // Track when someone views the consultation booking page
+    fbq('track', 'ViewContent', {
+        content_name: 'AI Consultation Booking Page',
+        content_category: 'Consultation',
+        value: 0.00,
+        currency: 'USD'
+    });
+    
+    // CRITICAL: Track form submission completion (for Meta Ads optimization)
+    fbq('track', 'CompleteRegistration', {
+        content_name: 'Free AI Consultation Registration',
+        status: 'completed',
+        value: 0.00,
+        currency: 'AUD'
+    });
+    
+    // Also track as Lead for campaign optimization
+    fbq('track', 'Lead', {
+        content_name: 'AI Consultation Form Submitted',
+        content_category: 'Consultation',
+        lead_type: 'Free Consultation',
+        value: 0.00,
+        currency: 'AUD'
+    });
+    
+    // Track as custom conversion for better reporting
+    fbq('trackCustom', 'ConsultationFormSubmitted', {
+        form_type: 'AI Consultation',
+        source: document.referrer || 'direct',
+        timestamp: new Date().toISOString()
+    });
     </script>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=EAAPgQgZAa150BPZAWkxCb3Kzu3ucFfyYZApgZAXpWozpa0YaJdLjZBM7TWl5CUQ6dwXbdP9hp58AKjtFpWo7rsFZAdfAlZA7MJIAwMOiYZA0uAJxOZAhZA9KV0mruyyas8qeHZAN2diZB5NATRGZBbrSWH7NPVceaSwKuYGwTdloxZCEIXGQluj4j7JvMp2iKFxwb7hqK3NAZDZD&ev=PageView&noscript=1"
+    src="https://www.facebook.com/tr?id=1613600436203790&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
 </head>
@@ -75,6 +107,7 @@
                                             <tr>
                                                 <td style="background-color: #6c63ff; border-radius: 50px; text-align: center;">
                                                     <a href="https://outlook.office.com/bookwithme/user/465556b714d24629b3df0ad909ff5a4d@smecai.au/meetingtype/n5fSoQOWXUGwGin3vO4xJQ2?bookingcode=dde89f6f-9f53-4cc8-82e5-9c432a2f0c52&anonymous&ep=mLinkFromTile" 
+                                                       onclick="fbq('track', 'Lead', {content_name: 'AI Consultation Booking', content_category: 'Consultation'}); fbq('track', 'InitiateCheckout', {value: 0.00, currency: 'USD', content_name: 'Free AI Consultation'});"
                                                        style="display: inline-block; padding: 15px 40px; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold;">
                                                         📅 Click here to find a suitable time
                                                     </a>
@@ -89,6 +122,7 @@
                             <p style="color: #636e72; font-size: 14px; text-align: center; margin: 20px 0;">
                                 If the button above doesn't work, please copy and paste this link into your browser:<br>
                                 <a href="https://outlook.office.com/bookwithme/user/465556b714d24629b3df0ad909ff5a4d@smecai.au/meetingtype/n5fSoQOWXUGwGin3vO4xJQ2?bookingcode=dde89f6f-9f53-4cc8-82e5-9c432a2f0c52&anonymous&ep=mLinkFromTile" 
+                                   onclick="fbq('track', 'Lead', {content_name: 'AI Consultation Booking - Text Link', content_category: 'Consultation'}); fbq('track', 'InitiateCheckout', {value: 0.00, currency: 'USD', content_name: 'Free AI Consultation'});"
                                    style="color: #6c63ff; word-break: break-all;">
                                     https://outlook.office.com/bookwithme/user/465556b714d24629b3df0ad909ff5a4d@smecai.au/meetingtype/n5fSoQOWXUGwGin3vO4xJQ2?bookingcode=dde89f6f-9f53-4cc8-82e5-9c432a2f0c52&anonymous&ep=mLinkFromTile
                                 </a>
@@ -103,5 +137,104 @@
             </td>
         </tr>
     </table>
+    
+    <!-- Additional Meta Pixel Tracking Scripts -->
+    <script>
+    // Track time spent on page
+    let startTime = Date.now();
+    window.addEventListener('beforeunload', function() {
+        let timeSpent = Math.round((Date.now() - startTime) / 1000);
+        if (timeSpent > 10) { // Only track if user spent more than 10 seconds
+            fbq('trackCustom', 'TimeOnPage', {
+                seconds: timeSpent,
+                page: 'consultation_booking'
+            });
+        }
+    });
+    
+    // Track scroll depth
+    let maxScroll = 0;
+    window.addEventListener('scroll', function() {
+        let scrollPercentage = Math.round((window.scrollY + window.innerHeight) / document.body.scrollHeight * 100);
+        if (scrollPercentage > maxScroll) {
+            maxScroll = scrollPercentage;
+            if (maxScroll >= 50 && maxScroll < 55) {
+                fbq('trackCustom', 'ScrollDepth50', {page: 'consultation_booking'});
+            } else if (maxScroll >= 75 && maxScroll < 80) {
+                fbq('trackCustom', 'ScrollDepth75', {page: 'consultation_booking'});
+            } else if (maxScroll >= 90) {
+                fbq('trackCustom', 'ScrollDepth90', {page: 'consultation_booking'});
+            }
+        }
+    });
+    
+    // Enhanced link tracking with error handling
+    document.addEventListener('DOMContentLoaded', function() {
+        // Track UTM parameters and campaign source
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get('utm_source') || 'organic';
+        const utmMedium = urlParams.get('utm_medium') || 'direct';
+        const utmCampaign = urlParams.get('utm_campaign') || 'none';
+        const utmContent = urlParams.get('utm_content') || 'none';
+        const fbclid = urlParams.get('fbclid') ? 'facebook_ad' : null;
+        
+        // Track advanced user behavior for better audience insights
+        fbq('trackCustom', 'ThankYouPageView', {
+            utm_source: utmSource,
+            utm_medium: utmMedium,
+            utm_campaign: utmCampaign,
+            utm_content: utmContent,
+            traffic_source: fbclid || utmSource,
+            referrer: document.referrer,
+            page_path: window.location.pathname
+        });
+        
+        const bookingLinks = document.querySelectorAll('a[href*="bookwithme"]');
+        bookingLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                try {
+                    // Track the click event
+                    if (typeof fbq !== 'undefined') {
+                        fbq('track', 'Schedule', {
+                            content_name: 'AI Consultation Calendar Click',
+                            content_category: 'Consultation',
+                            source: link.tagName === 'A' && link.innerText.includes('📅') ? 'button' : 'text_link'
+                        });
+                        
+                        // Track for retargeting - people who clicked but might not have scheduled
+                        fbq('trackCustom', 'CalendarLinkClicked', {
+                            timestamp: new Date().toISOString(),
+                            page_url: window.location.href,
+                            utm_campaign: utmCampaign
+                        });
+                    }
+                } catch(error) {
+                    console.log('Tracking error:', error);
+                }
+            });
+        });
+        
+        // Track conversions by target professional audience
+        if (utmContent) {
+            const audienceMap = {
+                'general_medical': 'General Medical Professionals',
+                'oncology': 'Oncology Professionals',
+                'physiotherapist': 'Physiotherapy Professionals',
+                'pharmacist': 'Pharmacy Professionals',
+                'pathologist': 'Pathology Professionals',
+                'healthcare': 'Healthcare Sector',
+                'enterprise': 'Enterprise Clients',
+                'sme': 'Small-Medium Business'
+            };
+            
+            const audience = audienceMap[utmContent.toLowerCase()] || utmContent;
+            fbq('trackCustom', 'TargetAudienceConversion', {
+                audience_type: audience,
+                profession_category: utmContent,
+                campaign: utmCampaign
+            });
+        }
+    });
+    </script>
 </body>
 </html>
